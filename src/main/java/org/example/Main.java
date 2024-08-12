@@ -33,7 +33,7 @@ public class Main {
             // if it does increment it, else add it to and set it to 1
             // if client does not exist create it and then do the other steps
 
-            list.forEach(purchase -> {
+            list.stream().forEach(purchase -> {
                     // if client isn't already key, create one
                     if(!finalresualt.containsKey(purchase.getClient())) {
                             finalresualt.put(purchase.getClient(), new HashMap<>());
@@ -50,10 +50,13 @@ public class Main {
                     }
             });
 
-            finalresualt.forEach((client, infos) -> {
-                    infos.forEach((product, quantity) -> {
-                            System.out.println(client.toString() + " - " + product + " - " + quantity );
+            finalresualt.entrySet().stream()
+                    .forEach(entry -> {
+                            Client client = entry.getKey();
+                            Map<String, Integer> purchases = entry.getValue();
+                            purchases.forEach((product, quantity) -> {
+                                    System.out.println(client.toString() + " - " + product + " - " + quantity);
+                            });
                     });
-            });
     }
 }
